@@ -1,5 +1,6 @@
 package com.example.calculator
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +21,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -102,13 +104,15 @@ fun Calculate(modifier: Modifier = Modifier) {
     ) {
         Text(
             text = inputValue,
-            fontSize = 24.sp,
+            fontSize = 64.sp,
             modifier = Modifier
                 .padding(0.dp, 10.dp, 0.dp, 10.dp)
                 .fillMaxWidth()
+                .height(100.dp)
                 .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp),
-            textAlign = TextAlign.End
+            textAlign = TextAlign.End,
+            fontWeight = FontWeight.Bold
         )
         Row(
             modifier = Modifier
@@ -116,10 +120,22 @@ fun Calculate(modifier: Modifier = Modifier) {
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            ButtonElement(text = "%") {onButtonClick("%")}
-            ButtonElement(text = "C") { onButtonClick("C") }
-            ButtonElement(text = "<--") {onButtonClick("<--")}
-            ButtonElement(text = "+") { onButtonClick("+") }
+            ButtonElement(
+                text = "+/-",
+                colorHex="#808080"
+            ) {onButtonClick("+/-")}
+            ButtonElement(
+                text = "%",
+                colorHex = "#808080"
+            ) {onButtonClick("%")}
+            ButtonElement(
+                text = "C",
+                colorHex = "#808080"
+            ) { onButtonClick("C") }
+            ButtonElement(
+                text = "<--",
+                colorHex = "#808080"
+            ) {onButtonClick("<--")}
         }
         Row(
             modifier = Modifier
@@ -130,7 +146,10 @@ fun Calculate(modifier: Modifier = Modifier) {
             ButtonElement(text = "1") { onButtonClick("1") }
             ButtonElement(text = "2") { onButtonClick("2") }
             ButtonElement(text = "3") { onButtonClick("3") }
-            ButtonElement(text = "-") { onButtonClick("-") }
+            ButtonElement(
+                text = "+",
+                colorHex = "#FFA500"
+            ) { onButtonClick("+") }
         }
         Row(
             modifier = Modifier
@@ -141,7 +160,10 @@ fun Calculate(modifier: Modifier = Modifier) {
             ButtonElement(text = "4") { onButtonClick("4") }
             ButtonElement(text = "5") { onButtonClick("5") }
             ButtonElement(text = "6") { onButtonClick("6") }
-            ButtonElement(text = "x") { onButtonClick("x") }
+            ButtonElement(
+                text = "-",
+                colorHex = "#FFA500"
+            ) { onButtonClick("-") }
         }
         Row(
             modifier = Modifier
@@ -152,7 +174,10 @@ fun Calculate(modifier: Modifier = Modifier) {
             ButtonElement(text = "7") { onButtonClick("7") }
             ButtonElement(text = "8") { onButtonClick("8") }
             ButtonElement(text = "9") { onButtonClick("9") }
-            ButtonElement(text = "÷") { onButtonClick("÷") }
+            ButtonElement(
+                text = "x",
+                colorHex = "#FFA500"
+            ) { onButtonClick("x") }
         }
         Row(
             modifier = Modifier
@@ -160,18 +185,23 @@ fun Calculate(modifier: Modifier = Modifier) {
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            ButtonElement(text = "+/-") { onButtonClick("+/-") }
-            ButtonElement(text = "0") { onButtonClick("0") }
             ButtonElement(text = ",") { onButtonClick(",") }
+            ButtonElement(text = "0") { onButtonClick("0") }
             ButtonElement(text = "=") { onButtonClick("=") }
+            ButtonElement(
+                text = "÷",
+                colorHex = "#FFA500"
+            ) { onButtonClick("÷") }
         }
     }
 }
 
+@SuppressLint("Range")
 @Composable
-fun ButtonElement(text: String, onButtonClick: (String) -> Unit = {}) {
+fun ButtonElement(text: String, colorHex: String = "#205b7a", onButtonClick: (String) -> Unit = {}) {
     Button(
         onClick = { onButtonClick(text) },
+        colors = ButtonDefaults.buttonColors(containerColor = Color(android.graphics.Color.parseColor(colorHex))),
         modifier = Modifier
             .width(80.dp)
             .height(80.dp)
